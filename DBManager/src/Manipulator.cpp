@@ -7,8 +7,13 @@ namespace db {
 
 std::pair<DBResult, DBIndex> Manipulator::insertRow(const QString &tableName, const QVariantList &recordData)
 {
-    const QString& query {generateInsertQuery(tableName, recordData.size())};
-    const auto& result {m_executor.execute(query, recordData)};
+    if (recordData.isEmpty()) {
+        return {DBResult::FAIL, -1};
+    }
+    auto tempRecordData = recordData;
+    tempRecordData.pop_front(); // remove id
+    const QString& query {generateInsertQuery(tableName, static_cast<size_t>(tempRecordData.size()))};
+    const auto& result {m_executor.execute(query, tempRecordData)};
     return {result.first, result.second.lastInsertId().toInt()};
 }
 

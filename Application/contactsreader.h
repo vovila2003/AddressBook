@@ -15,6 +15,9 @@ public:
     ~ContactsReader();
     std::pair<bool,
              std::vector<Contact> > requestContactsBrowse();
+    std::pair<bool, int> requestAddContact(const Contact& contact);
+    bool requestDeleteContact(const Contact& contact);
+    bool requestEditContact(const Contact& contact);
 private:
     std::unique_ptr<db::Processor> m_processor;
 };

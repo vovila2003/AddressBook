@@ -57,5 +57,21 @@ std::pair<DBResult, std::vector<DBEntry> > Processor::requestTableData(DBTables 
     return result;
 }
 
+DBResult Processor::requestUpdateData()
+{
+    return DBResult::OK;
+}
+
+DBResult Processor::requestDeleteData(DBTables table, const db::DBEntry &entry)
+{
+    return DBResult::OK;
+}
+
+std::pair <DBResult, DBIndex> Processor::requestAddData(DBTables table, const db::DBEntry &entry)
+{
+    const auto& result {m_d->manipulator.insertRow(TableMapper.at(table), entry)};
+    return result;
+}
+
 
 }

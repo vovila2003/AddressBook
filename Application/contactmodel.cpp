@@ -81,15 +81,24 @@ bool ContactModel::setData(const QModelIndex &index, const QVariant &value, int 
 
 bool ContactModel::addData(const QString &name, const QString &surname, const QString &phone)
 {
-    auto newContact {Contact(name, surname, phone)};
+    bool result = false;
+    int id = -1;
+    auto newContact {Contact(id, name, surname, phone)};
+    std::tie(result, id) = mContactsReader.requestAddContact(newContact); // insert to db
+    qDebug() << "debuging2: " << result << id;
+    if (!result) {
+        return result;
+    }
+    newContact.setId(id);
     int index = static_cast<int>(mContacts.size());
     this->beginInsertRows(QModelIndex(), index, index);
     mContacts.push_back(newContact);
-    this->insertRow(index);
+    result = this->insertRow(index);
     this->endInsertRows();
     index = static_cast<int>(mContacts.size());
-    emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>() << NameRole << SurnameRole << PhoneNumberRole);
-    return true;
+    emit dataChanged(createIndex(index, 0), createIndex(index, 0), QVector<int>() << IdRole << NameRole << SurnameRole << PhoneNumberRole);
+
+    return result;
 }
 
 bool ContactModel::editData(int index, const QString &name, const QString &surname, const QString &phone)

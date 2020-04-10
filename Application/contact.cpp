@@ -1,9 +1,10 @@
 #include "contact.h"
 
-Contact::Contact(const QString &firstName, const QString &secondName, const QString &phone)
-    : mPhone (phone),
-      mFirstName (firstName),
-      mSurname (secondName)
+Contact::Contact(int id, const QString &firstName, const QString &secondName, const QString &phone)
+    : mId {id},
+      mPhone {phone},
+      mFirstName {firstName},
+      mSurname {secondName}
 {
 
 }
@@ -36,4 +37,14 @@ void Contact::setFirstName(const QString &firstName)
 void Contact::setSurname(const QString &surname)
 {
     mSurname = surname;
+}
+
+int Contact::id() const
+{
+    return mId;
+}
+
+void Contact::setId(int id)
+{
+    mId = id;
 }

@@ -10,8 +10,8 @@ public:
     ~Processor();
     std::pair<DBResult, std::vector<DBEntry>> requestTableData(DBTables table);
     DBResult requestUpdateData();
-    DBResult requestDeleteData();
-    DBResult requestAddData();
+    DBResult requestDeleteData(DBTables table, const db::DBEntry &entry);
+    std::pair<DBResult, DBIndex> requestAddData(DBTables table, const db::DBEntry &entry);
 private:
     struct ProcessorPrivate;
     std::unique_ptr<ProcessorPrivate> m_d;

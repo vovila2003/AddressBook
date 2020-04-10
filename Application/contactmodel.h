@@ -25,7 +25,8 @@ private:
     ContactsReader mContactsReader;
     std::vector<Contact> mContacts;
     enum ContactRoles {
-        NameRole = Qt::UserRole + 1,
+        IdRole = Qt::UserRole + 1,
+        NameRole,
         SurnameRole,
         PhoneNumberRole
     };
