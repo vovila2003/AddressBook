@@ -1,0 +1,5 @@
+module Impl
+ContactsView 1.0 ContactsView.qml
+EditDialog 1.0 EditDialog.qml
+InfoDialog 1.0 InfoDialog.qml
+YesNoDialog 1.0 YesNoDialog.qml

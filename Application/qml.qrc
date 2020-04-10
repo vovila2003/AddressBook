@@ -1,0 +1,30 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>qml/StyleSettings/Style.qml</file>
+        <file>qml/StyleSettings/qmldir</file>
+        <file>qml/ContactsModule/Base/qmldir</file>
+        <file>qml/ContactsModule/Impl/qmldir</file>
+        <file>qml/ContactsModule/qmldir</file>
+        <file>qml/ContactsModule/Base/BaseListDelegate.qml</file>
+        <file>qml/ContactsModule/Base/BaseListView.qml</file>
+        <file>qml/ContactsModule/Base/BaseText.qml</file>
+        <file>qml/ContactsModule/Impl/ContactsView.qml</file>
+        <file>qml/ContactsModule/Impl/ContactDelegate.qml</file>
+        <file>qml/ContactsModule/Base/ImageBubble.qml</file>
+        <file>qml/ContactsModule/Base/RoundImage.qml</file>
+        <file>qml/ContactsModule/ResourceProvider/qmldir</file>
+        <file>qml/ContactsModule/ResourceProvider/Resources.qml</file>
+        <file>qml/resources/contact.svg</file>
+        <file>qml/resources/111.png</file>
+        <file>qml/ContactsModule/Base/BaseDialog.qml</file>
+        <file>qml/ContactsModule/Impl/InfoDialog.qml</file>
+        <file>qml/ContactsModule/Impl/EditDialog.qml</file>
+        <file>qml/resources/edit.svg</file>
+        <file>qml/resources/info.png</file>
+        <file>qml/resources/edit.png</file>
+        <file>qml/resources/delete.png</file>
+        <file>qml/ContactsModule/Impl/YesNoDialog.qml</file>
+        <file>qml/ContactsModule/Base/BaseImage.qml</file>
+    </qresource>
+</RCC>
