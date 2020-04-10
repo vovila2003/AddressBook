@@ -55,6 +55,13 @@ std::pair <bool, int> ContactsReader::requestAddContact(const Contact &contact)
 bool ContactsReader::requestDeleteContact(const Contact &contact)
 {
     db::DBResult result;
-    result = m_processor->requestDeleteData(db::DBTables::Contacts, transformContactToEntry(contact));
+    result = m_processor->requestDeleteData(db::DBTables::Contacts, contact.id());
+    return result == db::DBResult::OK;
+}
+
+bool ContactsReader::requestEditContact(const Contact &contact)
+{
+    db::DBResult result;
+    result = m_processor->requestUpdateData(db::DBTables::Contacts, transformContactToEntry(contact));
     return result == db::DBResult::OK;
 }

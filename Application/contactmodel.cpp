@@ -28,6 +28,9 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
     }
     const Contact& contact {mContacts.at(static_cast<size_t>(index.row()))};
     switch (role) {
+    case ContactRoles::IdRole: {
+        return QVariant::fromValue(contact.id());
+    }
     case ContactRoles::NameRole: {
         return QVariant::fromValue(contact.firstName());
     }
@@ -46,6 +49,7 @@ QVariant ContactModel::data(const QModelIndex &index, int role) const
 QHash<int, QByteArray> ContactModel::roleNames() const
 {
     QHash<int, QByteArray> roles;
+    roles[ContactRoles::IdRole] = "id";
     roles[ContactRoles::NameRole] = "name";
     roles[ContactRoles::SurnameRole] = "surname";
     roles[ContactRoles::PhoneNumberRole] = "phoneNumber";
@@ -59,6 +63,10 @@ bool ContactModel::setData(const QModelIndex &index, const QVariant &value, int 
     }
 
     switch (role) {
+    case ContactRoles::IdRole: {
+        mContacts.at(static_cast<size_t>(index.row())).setId(value.toInt());
+        break;
+    }
     case ContactRoles::NameRole: {
         mContacts.at(static_cast<size_t>(index.row())).setFirstName(value.toString());
         break;
@@ -85,7 +93,6 @@ bool ContactModel::addData(const QString &name, const QString &surname, const QS
     int id = -1;
     auto newContact {Contact(id, name, surname, phone)};
     std::tie(result, id) = mContactsReader.requestAddContact(newContact); // insert to db
-    qDebug() << "debuging2: " << result << id;
     if (!result) {
         return result;
     }
@@ -106,7 +113,13 @@ bool ContactModel::editData(int index, const QString &name, const QString &surna
     if (!this->index(index, 0).isValid()){
         return false;
     }
-    bool result = true;
+    int id = this->data(this->index(index, 0), IdRole).toInt();
+    auto newContact {Contact(id, name, surname, phone)};
+    bool result = false;
+    result = mContactsReader.requestEditContact(newContact); // update in db
+    if (!result) {
+        return result;
+    }
     result &= setData(this->index(index, 0), name, NameRole);
     result &= setData(this->index(index, 0), surname, SurnameRole);
     result &= setData(this->index(index, 0), phone, PhoneNumberRole);
@@ -116,7 +129,13 @@ bool ContactModel::editData(int index, const QString &name, const QString &surna
 bool ContactModel::deleteData(int index)
 {
     if (index < 0 || !this->index(index, 0).isValid()) {
-        return false;
+        return false;    }
+    int id = this->data(this->index(index, 0), IdRole).toInt();
+    auto contact {Contact(id, QString(), QString(), QString())};
+    bool result = false;
+    result = mContactsReader.requestDeleteContact(contact); // delete from db
+    if (!result) {
+        return result;
     }
     this->beginRemoveRows(QModelIndex(), index, index);
     mContacts.erase(mContacts.begin() + index);

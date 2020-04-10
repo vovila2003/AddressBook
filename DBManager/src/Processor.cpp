@@ -57,14 +57,16 @@ std::pair<DBResult, std::vector<DBEntry> > Processor::requestTableData(DBTables 
     return result;
 }
 
-DBResult Processor::requestUpdateData()
+DBResult Processor::requestUpdateData(DBTables table, const db::DBEntry &entry)
 {
-    return DBResult::OK;
+    const auto& result {m_d->manipulator.updateRow(TableMapper.at(table), entry)};
+    return result;
 }
 
-DBResult Processor::requestDeleteData(DBTables table, const db::DBEntry &entry)
+DBResult Processor::requestDeleteData(DBTables table, DBIndex id)
 {
-    return DBResult::OK;
+    const auto& result {m_d->manipulator.deleteRow(TableMapper.at(table), id)};
+    return result;
 }
 
 std::pair <DBResult, DBIndex> Processor::requestAddData(DBTables table, const db::DBEntry &entry)
